@@ -54,7 +54,7 @@ make clean
 
 ## Gameplay Instructions
 
-1. Launch the executable and select your game mode (`[1] VS AI` or `[2] VS Player 2` or `[3], [q], [Q] to exit/quit`).
+1. Launch the executable and select your game mode (`[1] VS AI` or `[2] VS Player 2` or `[3] exit/quit`).
 2. Choose to start a `[N] New Game` or `[C] Continue` from your previous saved state.
 3. When prompted, enter your moves as row and column coordinates separated by a space (e.g., `2 3`).
 4. The engine will automatically validate the move, place your piece, and flip the appropriate opposing tiles.
