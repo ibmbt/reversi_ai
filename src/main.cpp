@@ -43,13 +43,20 @@ void playGame(bool againstAI) {
         else {
             int r, c;
             while (true) {
-                cout << "Player " << currentSymbol << " move (row col): ";
+                cout << "Player " << currentSymbol << " move (row col) or '-1 -1' to save & quit: ";
                 cin >> r >> c;
+
+                if (r == -1 && c == -1) {
+                    cout << "Saving game and exiting...\n";
+                    board.saveState(turn);
+                    return;
+                }
+
                 if (board.isValidMove(r, c, currentSymbol)) {
                     board.applyMove(r, c, currentSymbol);
                     break;
                 }
-                cout << "Invalid move.\n";
+                cout << "Invalid move. Try again.\n";
             }
         }
 
@@ -70,18 +77,29 @@ void playGame(bool againstAI) {
 }
 
 int main() {
-    char repeat = 'Y';
-    while (repeat == 'Y' || repeat == 'y') {
-        cout << "\n=== REVERSI ===\n[1] VS AI\n[2] VS Player 2\nChoice: ";
+    while (true) {
+        cout << "\n=== REVERSI ===\n"
+            << "[1] VS AI\n"
+            << "[2] VS Player 2\n"
+            << "[3] Quit\n"
+            << "Choice: ";
+
         char choice;
         cin >> choice;
 
-        if (choice == '1') playGame(true);
-        else if (choice == '2') playGame(false);
-        else    cout << "Invalid choice.\n";
-
-        cout << "Play again? (Y/N): ";
-        cin >> repeat;
+        if (choice == '1') {
+            playGame(true);
+        }
+        else if (choice == '2') {
+            playGame(false);
+        }
+        else if (choice == '3' || choice == 'q' || choice == 'Q') {
+            cout << "Exiting game. Goodbye!\n";
+            break;
+        }
+        else {
+            cout << "Invalid choice.\n";
+        }
     }
     return 0;
 }
