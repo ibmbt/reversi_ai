@@ -2,6 +2,7 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+using namespace std;
 
 struct Move {
     int r, c;

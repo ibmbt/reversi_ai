@@ -2,10 +2,17 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
+using namespace std;
 
 int AI::evaluateBoard(const Board& board, char symbol) {
     int score = 0;
-    char opponent = (symbol == 'O') ? 'X' : 'O';
+    char opponent;
+    if (symbol == 'O') {
+        opponent = 'X';
+    }
+    else {
+        opponent = 'O';
+    }
 
     const int weights[8][8] = {
         {100, -20, 10,  5,  5, 10, -20, 100},
@@ -71,7 +78,13 @@ int AI::minimax(const Board& board, int depth, int alpha, int beta, bool isMaxim
 
 Move AI::getBestMove(const Board& board, char symbol, int depth) {
     vector<Move> validMoves = board.getValidMoves(symbol);
-    char oppSymbol = (symbol == 'O') ? 'X' : 'O';
+    char oppSymbol;
+    if (symbol == 'O') {
+        oppSymbol = 'X';
+    }
+    else {
+        oppSymbol = 'O';
+    }
 
     Move bestMove = { -1, -1 };
     int bestValue = -100000;
