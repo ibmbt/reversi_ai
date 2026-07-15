@@ -1,5 +1,5 @@
-#include "board.h"
-#include "ai.h"
+#include "../inc/board.h"
+#include "../inc/ai.h"
 #include <iostream>
 using namespace std;
 

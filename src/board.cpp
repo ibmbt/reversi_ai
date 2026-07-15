@@ -1,4 +1,4 @@
-#include "board.h"
+#include "../inc/board.h"
 
 Board::Board() {
     initialize();
@@ -112,7 +112,7 @@ char Board::getCell(int r, int c) const {
 }
 
 void Board::saveState(int turn) const {
-    ofstream fout("reversi_save.txt");
+    ofstream fout("../savefile/reversi_save.txt");
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {
             fout << grid[i][j];
@@ -123,7 +123,7 @@ void Board::saveState(int turn) const {
 }
 
 bool Board::loadState(int& turn) {
-    ifstream fin("reversi_save.txt");
+    ifstream fin("../savefile/reversi_save.txt");
     if (!fin) return false;
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {
