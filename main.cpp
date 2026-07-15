@@ -1,0 +1,87 @@
+#include "board.h"
+#include "ai.h"
+#include <iostream>
+using namespace std;
+
+void playGame(bool againstAI) {
+    Board board;
+    int turn = 0;
+    char choice;
+
+    cout << "[N] New Game\n[C] Continue\nChoice: ";
+    cin >> choice;
+    if (choice == 'C' || choice == 'c') {
+        if (!board.loadState(turn)) {
+            cout << "Failed to load state. Starting new game.\n";
+            board.initialize();
+        }
+    }
+
+    while (!board.isGameOver()) {
+        board.display();
+
+        char currentSymbol;
+        if (turn == 0) {
+            currentSymbol = 'O';
+        }
+        else {
+            currentSymbol = 'X';
+        }
+
+        if (!board.canMakeMove(currentSymbol)) {
+            cout << currentSymbol << " has no valid moves. Skipping turn.\n";
+            turn = 1 - turn;
+            continue;
+        }
+
+        if (againstAI && turn == 1) {
+            cout << "AI is thinking...\n";
+            Move aiMove = AI::getBestMove(board, 'X', 6);
+            board.applyMove(aiMove.r, aiMove.c, 'X');
+            cout << "AI placed at " << aiMove.r << " " << aiMove.c << "\n";
+        }
+        else {
+            int r, c;
+            while (true) {
+                cout << "Player " << currentSymbol << " move (row col): ";
+                cin >> r >> c;
+                if (board.isValidMove(r, c, currentSymbol)) {
+                    board.applyMove(r, c, currentSymbol);
+                    break;
+                }
+                cout << "Invalid move.\n";
+            }
+        }
+
+        turn = 1 - turn;
+        board.saveState(turn);
+
+        int scoreO, scoreX;
+        board.getScores(scoreO, scoreX);
+        cout << "Score -> O: " << scoreO << " | X: " << scoreX << "\n";
+    }
+
+    board.display();
+    int scoreO, scoreX;
+    board.getScores(scoreO, scoreX);
+    if (scoreO > scoreX)    cout << "Player O wins!\n";
+    else if (scoreX > scoreO)    cout << "Player X wins!\n";
+    else    cout << "Draw!\n";
+}
+
+int main() {
+    char repeat = 'Y';
+    while (repeat == 'Y' || repeat == 'y') {
+        cout << "\n=== REVERSI ===\n[1] VS AI\n[2] VS Player 2\nChoice: ";
+        char choice;
+        cin >> choice;
+
+        if (choice == '1') playGame(true);
+        else if (choice == '2') playGame(false);
+        else    cout << "Invalid choice.\n";
+
+        cout << "Play again? (Y/N): ";
+        cin >> repeat;
+    }
+    return 0;
+}
